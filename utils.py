@@ -2,11 +2,17 @@ from radiomics import featureextractor
 import SimpleITK as sitk
 import six
 import numpy as np
+import nibabel as nib
 
 
-def read_img_sitk(img_path):
+def read_sitk_img(img_path):
     image_data = sitk.ReadImage(img_path)
     return image_data 
+
+
+def read_nii_img(img_path):
+    image_data = np.array(nib.load(img_path).get_fdata())
+    return image_data
 
 
 def centre_of_tumor(input_image,input_mask):

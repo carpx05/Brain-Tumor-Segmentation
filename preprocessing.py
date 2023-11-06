@@ -11,7 +11,7 @@ scaler = MinMaxScaler()
 # from skimage import exposure, util
 from tensorflow.keras.utils import to_categorical
 import os
-from utils import read_img_sitk, centre_of_tumor, crop_images, normalize_image, rescale_image, n4_bias_correction
+from utils import read_sitk_img, centre_of_tumor, crop_images, normalize_image, rescale_image, n4_bias_correction
 import SimpleITK as sitk
 
 
@@ -39,18 +39,18 @@ for img in range(len(t2_list)):   #Using t2_list as all lists are of same size
 
     #cropping
 
-    mask = read_img_sitk(mask_list[img])
-    image_t1 = read_img_sitk(t1_list[img])
+    mask = read_sitk_img(mask_list[img])
+    image_t1 = read_sitk_img(t1_list[img])
     centre = centre_of_tumor(image_t1,mask)
     cropped_image_t1 = crop_images(image_t1,centre,optimal_roi)
     
-    image_t1ce = read_img_sitk(t1ce_list[img])
+    image_t1ce = read_sitk_img(t1ce_list[img])
     cropped_image_t1ce = crop_images(image_t1ce,centre,optimal_roi)
     
-    image_t2 = read_img_sitk(t2_list[img])
+    image_t2 = read_sitk_img(t2_list[img])
     cropped_image_t2 = crop_images(image_t2,centre,optimal_roi)
     
-    image_flair = read_img_sitk(flair_list[img])
+    image_flair = read_sitk_img(flair_list[img])
     cropped_image_flair = crop_images(image_flair,centre,optimal_roi)
     
     cropped_mask = crop_images(mask,centre,optimal_roi)
